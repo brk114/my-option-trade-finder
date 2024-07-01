@@ -22,19 +22,78 @@ import "./App.css";
 
 // logo imports
 import logo from "./logo.svg";
+import CPRScanner from "./routes/scanners/CPR";
+import BearishHammerScanner from "./routes/scanners/BearishHammer";
+import BullishHammerScanner from "./routes/scanners/BullishHammer";
+import Dashboard from "./routes/Dashboard";
+import Equity from "./routes/Equity";
+import ScannersDashboard from "./routes/scanners/ScannersDashboard";
 
 const router = createBrowserRouter([
   {
-    path: "/equities",
+    path: "/",
     element: <Layout />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: "equity/:symbol",
-        element: <Layout />,
+        path: "dashboard",
+        element: <Dashboard />,
         errorElement: <ErrorPage />,
       },
+      {
+        path: "equity/:symbol",
+        element: <Equity />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "scanners",
+        element: <ScannersDashboard />,
+        errorElement: <ErrorPage />,
+        children: [
+          {
+            path: "cpr",
+            element: <CPRScanner />,
+            errorElement: <ErrorPage />,
+            children: [
+              {
+                path: "cpr/:symbol",
+                element: <Equity />,
+                errorElement: <ErrorPage />,
+              },
+            ],
+          },
+          {
+            path: "bullish-hammer",
+            element: <BullishHammerScanner />,
+            errorElement: <ErrorPage />,
+            children: [
+              {
+                path: "bullish-hammer/:symbol",
+                element: <BearishHammerScanner />,
+                errorElement: <ErrorPage />,
+              },
+            ],
+          },
+          {
+            path: "bearish-hammer",
+            element: <BearishHammerScanner />,
+            errorElement: <ErrorPage />,
+            children: [
+              {
+                path: "bearish-hammer/:symbol",
+                element: <BearishHammerScanner />,
+                errorElement: <ErrorPage />,
+              },
+            ],
+          },
+        ],
+      },
     ],
+  },
+  {
+    path: "/equities",
+    element: <Layout />,
+    errorElement: <ErrorPage />,
   },
 ]);
 

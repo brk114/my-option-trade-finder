@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import APIUrls from "../../constants/APIs";
 import { APIService } from "../api-service";
-import { IndexType } from "../../types/IndexType";
+import { IndexType } from "../../core/types/IndexType";
 // import { OptionSharedService } from "../option-shared-service";
 
 const getEquityHistoricalData = (config: any) => {
@@ -14,8 +14,8 @@ const getEquityHistoricalData = (config: any) => {
   );
 };
 
-const getIndexOptionChain = (config: IndexType) => {
-  return APIService.get(APIUrls.NSE.getOptionChainForIndex(config.index));
+const getIndexOptionChain = (config: { indexType: IndexType }) => {
+  return APIService.get(APIUrls.NSE.getOptionChainForIndex(config.indexType));
 };
 
 const getEquityOptionChain = (config: any) => {

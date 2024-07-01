@@ -4,12 +4,25 @@ export interface CPR {
   bottom: number;
 }
 
-const getCPR = (high: number, low: number, close: number): CPR => {
+/**
+ * Calculates and returns the CPR values for a given Symbol.
+ * If the values are from last session, return the CPR for next session.
+ * If the values are from last week, return the CPR for next week.  
+ * @param previousHigh Previous high value of the Symbol
+ * @param previousLow Previous low value of the Symbol
+ * @param previousClose Previous close value of the Symbol
+ * @returns CPR range value (pivot: Central Pivot, top: Central Top Pivot and bottom: Central Bottom Pivot)
+ */
+const getCPR = (
+  previousHigh: number,
+  previousLow: number,
+  previousClose: number
+): CPR => {
   let cpr = {} as CPR;
-  cpr.pivot = (high + low + close) / 3;
+  cpr.pivot = (previousHigh + previousLow + previousClose) / 3;
 
   // Calculate BottomCentral
-  cpr.bottom = (high + low) / 2;
+  cpr.bottom = (previousHigh + previousLow) / 2;
 
   //    Calculate TC
   cpr.top = cpr.pivot - cpr.bottom + cpr.pivot;
@@ -17,6 +30,12 @@ const getCPR = (high: number, low: number, close: number): CPR => {
   return cpr;
 };
 
+/**
+ *
+ * @param prices
+ * @param period
+ * @returns
+ */
 const getEMA = (prices: number[], period: number): number => {
   const k = 2 / (period + 1);
   let ema = prices[0];

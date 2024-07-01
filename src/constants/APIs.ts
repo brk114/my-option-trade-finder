@@ -1,4 +1,4 @@
-import DateHelpers from "../utils/dateUtils";
+import { DateHelpers } from "../utils/dateUtils";
 const APIs = {
   NSE: {
     getOptionChainForIndex: (index: string) =>
